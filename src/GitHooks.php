@@ -99,9 +99,16 @@ class GitHooks
 
     /**
      * Returns the path to the git hooks directory.
+     * Uses git rev-parse to resolve the correct path in both regular repos and worktrees.
      */
     public function getGitHooksDir(): string
     {
+        $gitCommonDir = rtrim((string) shell_exec('git -C '.escapeshellarg(base_path()).' rev-parse --git-common-dir 2>/dev/null'));
+
+        if ($gitCommonDir !== '' && is_dir($gitCommonDir)) {
+            return $gitCommonDir.DIRECTORY_SEPARATOR.'hooks';
+        }
+
         return base_path('.git'.DIRECTORY_SEPARATOR.'hooks');
     }
 }
