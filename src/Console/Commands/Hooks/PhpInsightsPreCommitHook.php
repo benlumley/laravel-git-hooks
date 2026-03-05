@@ -27,10 +27,10 @@ class PhpInsightsPreCommitHook extends BaseCodeAnalyzerPreCommitHook implements 
     {
         $this->configParam = $this->configParam();
 
-        return $this->setFileExtensions(config('git-hooks.code_analyzers.phpinsights.file_extensions'))
-            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.phpinsights.path'), true)
-            ->setRunInDocker(config('git-hooks.code_analyzers.phpinsights.run_in_docker'))
-            ->setDockerContainer(config('git-hooks.code_analyzers.phpinsights.docker_container'))
+        return $this->setFileExtensions(config('git-hooks.code_analyzers.phpinsights.file_extensions', []))
+            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.phpinsights.path', ''), true)
+            ->setRunInDocker(config('git-hooks.code_analyzers.phpinsights.run_in_docker', false))
+            ->setDockerContainer(config('git-hooks.code_analyzers.phpinsights.docker_container', ''))
             ->handleCommittedFiles($files, $next);
     }
 

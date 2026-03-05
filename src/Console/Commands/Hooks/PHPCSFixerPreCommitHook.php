@@ -27,10 +27,10 @@ class PHPCSFixerPreCommitHook extends BaseCodeAnalyzerPreCommitHook implements C
     {
         $this->configParam = $this->configParam();
 
-        return $this->setFileExtensions(config('git-hooks.code_analyzers.php_cs_fixer.file_extensions'))
-            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.php_cs_fixer.path'))
-            ->setRunInDocker(config('git-hooks.code_analyzers.php_cs_fixer.run_in_docker'))
-            ->setDockerContainer(config('git-hooks.code_analyzers.php_cs_fixer.docker_container'))
+        return $this->setFileExtensions(config('git-hooks.code_analyzers.php_cs_fixer.file_extensions', []))
+            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.php_cs_fixer.path', ''))
+            ->setRunInDocker(config('git-hooks.code_analyzers.php_cs_fixer.run_in_docker', false))
+            ->setDockerContainer(config('git-hooks.code_analyzers.php_cs_fixer.docker_container', ''))
             ->handleCommittedFiles($files, $next);
     }
 
