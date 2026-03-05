@@ -27,10 +27,10 @@ class RectorPreCommitHook extends BaseCodeAnalyzerPreCommitHook implements CodeA
     {
         $this->configParam = $this->configParam();
 
-        return $this->setFileExtensions(config('git-hooks.code_analyzers.rector.file_extensions'))
-            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.rector.path'), true)
-            ->setRunInDocker(config('git-hooks.code_analyzers.rector.run_in_docker'))
-            ->setDockerContainer(config('git-hooks.code_analyzers.rector.docker_container'))
+        return $this->setFileExtensions(config('git-hooks.code_analyzers.rector.file_extensions', []))
+            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.rector.path', ''), true)
+            ->setRunInDocker(config('git-hooks.code_analyzers.rector.run_in_docker', false))
+            ->setDockerContainer(config('git-hooks.code_analyzers.rector.docker_container', ''))
             ->handleCommittedFiles($files, $next);
     }
 

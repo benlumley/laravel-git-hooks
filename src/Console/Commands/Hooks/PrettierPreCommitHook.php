@@ -27,10 +27,10 @@ class PrettierPreCommitHook extends BaseCodeAnalyzerPreCommitHook implements Cod
     {
         $this->configParam = $this->configParam();
 
-        return $this->setFileExtensions(config('git-hooks.code_analyzers.prettier.file_extensions'))
-            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.prettier.path'), true)
-            ->setRunInDocker(config('git-hooks.code_analyzers.prettier.run_in_docker'))
-            ->setDockerContainer(config('git-hooks.code_analyzers.prettier.docker_container'))
+        return $this->setFileExtensions(config('git-hooks.code_analyzers.prettier.file_extensions', []))
+            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.prettier.path', ''), true)
+            ->setRunInDocker(config('git-hooks.code_analyzers.prettier.run_in_docker', false))
+            ->setDockerContainer(config('git-hooks.code_analyzers.prettier.docker_container', ''))
             ->handleCommittedFiles($files, $next);
     }
 

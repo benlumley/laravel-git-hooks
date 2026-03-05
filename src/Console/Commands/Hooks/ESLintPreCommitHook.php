@@ -27,10 +27,10 @@ class ESLintPreCommitHook extends BaseCodeAnalyzerPreCommitHook implements CodeA
     {
         $this->configParam = $this->configParam();
 
-        return $this->setFileExtensions(config('git-hooks.code_analyzers.eslint.file_extensions'))
-            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.eslint.path'), true)
-            ->setRunInDocker(config('git-hooks.code_analyzers.eslint.run_in_docker'))
-            ->setDockerContainer(config('git-hooks.code_analyzers.eslint.docker_container'))
+        return $this->setFileExtensions(config('git-hooks.code_analyzers.eslint.file_extensions', []))
+            ->setAnalyzerExecutable(config('git-hooks.code_analyzers.eslint.path', ''), true)
+            ->setRunInDocker(config('git-hooks.code_analyzers.eslint.run_in_docker', false))
+            ->setDockerContainer(config('git-hooks.code_analyzers.eslint.docker_container', ''))
             ->handleCommittedFiles($files, $next);
     }
 
