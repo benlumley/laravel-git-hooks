@@ -259,7 +259,7 @@ return [
     | of artisan.php.
     |
     */
-    'artisan_path' => base_path('artisan'),
+    'artisan_path' => 'artisan',
 
     /*
     |--------------------------------------------------------------------------

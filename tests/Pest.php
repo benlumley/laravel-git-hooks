@@ -34,7 +34,15 @@ expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 expect()->extend('toContainHookArtisanCommand', function ($hookName) {
     $this->value = file_get_contents($this->value);
-    $artisanCommand = sprintf('php %s git-hooks:%s $@ >&2', config('git-hooks.artisan_path'), $hookName);
+
+    // Replicate the same absolute-to-relative conversion that install() performs
+    $artisanPath = config('git-hooks.artisan_path', 'artisan');
+    $basePath = base_path().DIRECTORY_SEPARATOR;
+    if (str_starts_with($artisanPath, $basePath)) {
+        $artisanPath = substr($artisanPath, strlen($basePath));
+    }
+
+    $artisanCommand = sprintf('php %s git-hooks:%s $@ >&2', $artisanPath, $hookName);
 
     return $this->toContain($artisanCommand);
 });

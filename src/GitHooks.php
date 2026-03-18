@@ -70,9 +70,18 @@ class GitHooks
                 $hookScript
             );
         } else {
+            $artisanPath = config('git-hooks.artisan_path', 'artisan');
+
+            // Convert absolute paths to relative so hooks work correctly in git worktrees.
+            // Git always sets cwd to the repo/worktree root when running hooks.
+            $basePath = base_path().DIRECTORY_SEPARATOR;
+            if (str_starts_with($artisanPath, $basePath)) {
+                $artisanPath = substr($artisanPath, strlen($basePath));
+            }
+
             $hookScript = str_replace(
                 ['{php|sail}', '{artisanPath}'],
-                ['php', config('git-hooks.artisan_path')],
+                ['php', $artisanPath],
                 $hookScript
             );
         }
